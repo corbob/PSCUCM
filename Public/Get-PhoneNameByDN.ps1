@@ -1,10 +1,15 @@
 function Get-PhoneNameByDN {
     [CmdletBinding()]
     param (
+        [Parameter(Mandatory=$true)]
         [string]
         $DN,
+        [Parameter(Mandatory=$true)]
         [string]
-        $server = '10.10.20.1'
+        $server,
+        [Parameter(Mandatory=$true)]
+        [pscredential]
+        $Credential
     )
     $CUCMAXL = @{
         'entity'     = 'executeSQLQuery'
@@ -22,6 +27,7 @@ function Get-PhoneNameByDN {
 '@ -f $DN
         }
         'server' = $server
+        'Credential' = $Credential
     }
     Invoke-CUCMAXL @CUCMAXL
 }

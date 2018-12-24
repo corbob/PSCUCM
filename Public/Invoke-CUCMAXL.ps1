@@ -1,16 +1,20 @@
 function Invoke-CUCMAXL {
     [CmdletBinding()]
     param (
-        # [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true)]
         [string]
-        $entity = 'getPhone',
-        # [Parameter(Mandatory=$true)]
+        $entity,
+        [Parameter(Mandatory=$true)]
         [hashtable]
-        $parameters = @{'name'='mine'},
+        $parameters,
         [string]
         $AXLVersion = '11.5',
+        [Parameter(Mandatory=$true)]
         [string]
-        $server = '10.10.20.1'
+        $server,
+        [Parameter(Mandatory=$true)]
+        [pscredential]
+        $Credential
     )
     $User = 'powershell'
     $Password = 'P0werThaShell'
@@ -21,7 +25,7 @@ function Invoke-CUCMAXL {
         SOAPAction     = '"CUCM:DB ver={0} {1}"' -f $AXLVersion, $entity
         Authorization  = 'Basic ' + [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes("$($User):$Password"))
     }
-    $params = foreach($paramKey in $parameters.Keys) {
+    $params = foreach ($paramKey in $parameters.Keys) {
         '<{0}>{1}</{0}>' -f $paramKey, $parameters[$paramKey]
     }
     $body = @'
@@ -34,8 +38,20 @@ function Invoke-CUCMAXL {
           </soapenv:Body>
         </soapenv:Envelope>
 '@ -f $AXLVersion, $entity, $params
-    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-    Invoke-restmethod -Uri  $CUCMURL -Method Post -Body $body -Headers $headers |
+
+    $IRMParams = @{
+        'Headers' = $headers
+        'Body'    = $body
+        'Uri'     = $CUCMURL
+        'Method'  = 'Post'
+    }
+    if ($PSVersionTable.PSVersion.Major -ge 6) {
+        $IRMParams.SkipCertificateCheck = $true
+    }
+    else {
+        [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+    }
+    Invoke-restmethod @IRMParams |
         Select-XML -XPath '//return' |
         Select-Object -ExpandProperty Node
 }
