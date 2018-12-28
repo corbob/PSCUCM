@@ -16,7 +16,7 @@ function Get-PhoneByDN {
         'server' = $server
         'Credential' = $Credential
     }
-    $phoneName = Get-PhoneNameByDN @phoneNameByDNSplat |
+    $phoneName = Obtain-PhoneNameFromDN @phoneNameByDNSplat |
         Select-Xml -XPath '//name' |
         Select-Object -ExpandProperty node |
         Select-Object -ExpandProperty '#text'

@@ -1,4 +1,4 @@
-function Get-PhoneNameByDN {
+function Obtain-PhoneNameFromDN {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]

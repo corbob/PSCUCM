@@ -1,4 +1,4 @@
-function Invoke-CUCMAXL {
+function Invoke-CucmAxl {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
