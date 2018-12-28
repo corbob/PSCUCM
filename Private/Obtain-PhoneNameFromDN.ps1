@@ -11,7 +11,7 @@ function Obtain-PhoneNameFromDN {
         [pscredential]
         $Credential
     )
-    $CUCMAXL = @{
+    $CucmAxlSplat = @{
         'entity'     = 'executeSQLQuery'
         'parameters' = @{
             'sql' = @'
@@ -29,5 +29,5 @@ function Obtain-PhoneNameFromDN {
         'server' = $server
         'Credential' = $Credential
     }
-    Invoke-CUCMAXL @CUCMAXL
+    Invoke-CucmAxl @CucmAxlSplat
 }

@@ -20,7 +20,7 @@ function Get-PhoneByDN {
         Select-Xml -XPath '//name' |
         Select-Object -ExpandProperty node |
         Select-Object -ExpandProperty '#text'
-    $CUCMAXL = @{
+    $CucmAxlSplat = @{
         'server' = $server
         'entity' = 'getPhone'
         'parameters' = @{
@@ -28,5 +28,5 @@ function Get-PhoneByDN {
         }
         'Credential' = $Credential
     }
-    Invoke-CUCMAXL @CUCMAXL | Select-Xml -XPath '//phone' | Select-Object -ExpandProperty node
+    Invoke-CucmAxl @CucmAxlSplat | Select-Xml -XPath '//phone' | Select-Object -ExpandProperty node
 }
