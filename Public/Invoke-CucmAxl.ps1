@@ -37,11 +37,11 @@ function Invoke-CucmAxl {
 '@ -f $AXLVersion, $entity, $params
 
     $IRMParams = @{
-        'Headers'    = $headers
-        'Body'       = $body
-        'Uri'        = $CUCMURL
-        'Method'     = 'Post'
-        'Credential' = $Credential
+        Headers    = $headers
+        Body       = $body
+        Uri        = $CUCMURL
+        Method     = 'Post'
+        Credential = $Credential
     }
     if ($PSVersionTable.PSVersion.Major -ge 6) {
         $IRMParams.SkipCertificateCheck = $true
