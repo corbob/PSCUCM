@@ -29,5 +29,5 @@ function Obtain-PhoneNameFromDN {
         'Credential' = $Credential
         'AXLVersion' = $AXLVersion
     }
-    Invoke-CucmAxl @CucmAxlSplat
+    Invoke-CucmSql @CucmAxlSplat
 }
