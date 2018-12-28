@@ -1,20 +1,20 @@
 function Obtain-PhoneNameFromDN {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $DN,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $server,
-        [Parameter(Mandatory=$true)]
+        [string]
+        $AXLVersion = '11.5',
+        [Parameter(Mandatory = $true)]
         [pscredential]
         $Credential
     )
     $CucmAxlSplat = @{
-        'entity'     = 'executeSQLQuery'
-        'parameters' = @{
-            'sql' = @'
+        'SqlQuery'   = @'
             SELECT device.name 
             FROM 
             device, numplan, devicenumplanmap
@@ -25,9 +25,9 @@ function Obtain-PhoneNameFromDN {
             AND
             numplan.dnorpattern = "{0}"
 '@ -f $DN
-        }
-        'server' = $server
+        'server'     = $server
         'Credential' = $Credential
+        'AXLVersion' = $AXLVersion
     }
     Invoke-CucmAxl @CucmAxlSplat
 }

@@ -1,21 +1,21 @@
 function Invoke-CucmSql {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $SqlQuery,
         [string]
         $AXLVersion = '11.5',
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $server,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [pscredential]
         $Credential
     )
     $CucmAxlSplat = @{
-        'server' = $server
-        'entity' = 'executeSQLQuery'
+        'server'     = $server
+        'entity'     = 'executeSQLQuery'
         'parameters' = @{
             'sql' = $SqlQuery
         }

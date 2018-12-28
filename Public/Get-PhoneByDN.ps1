@@ -1,19 +1,19 @@
 function Get-PhoneByDN {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $DN,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $server,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [pscredential]
         $Credential
     )
     $phoneNameByDNSplat = @{
-        'DN' = $DN
-        'server' = $server
+        'DN'         = $DN
+        'server'     = $server
         'Credential' = $Credential
     }
     $phoneName = Obtain-PhoneNameFromDN @phoneNameByDNSplat |
@@ -21,8 +21,8 @@ function Get-PhoneByDN {
         Select-Object -ExpandProperty node |
         Select-Object -ExpandProperty '#text'
     $CucmAxlSplat = @{
-        'server' = $server
-        'entity' = 'getPhone'
+        'server'     = $server
+        'entity'     = 'getPhone'
         'parameters' = @{
             'name' = $phoneName
         }
