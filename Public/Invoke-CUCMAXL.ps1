@@ -1,29 +1,26 @@
 function Invoke-CUCMAXL {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $entity,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [hashtable]
         $parameters,
         [string]
         $AXLVersion = '11.5',
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $server,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [pscredential]
         $Credential
     )
-    $User = 'powershell'
-    $Password = 'P0werThaShell'
     $CUCMURL = "https://$server/axl/"
 
     $headers = @{
         'Content-Type' = 'text/xml; charset=utf-8'
         SOAPAction     = '"CUCM:DB ver={0} {1}"' -f $AXLVersion, $entity
-        Authorization  = 'Basic ' + [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes("$($User):$Password"))
     }
     $params = foreach ($paramKey in $parameters.Keys) {
         '<{0}>{1}</{0}>' -f $paramKey, $parameters[$paramKey]
@@ -40,10 +37,11 @@ function Invoke-CUCMAXL {
 '@ -f $AXLVersion, $entity, $params
 
     $IRMParams = @{
-        'Headers' = $headers
-        'Body'    = $body
-        'Uri'     = $CUCMURL
-        'Method'  = 'Post'
+        'Headers'    = $headers
+        'Body'       = $body
+        'Uri'        = $CUCMURL
+        'Method'     = 'Post'
+        'Credential' = $Credential
     }
     if ($PSVersionTable.PSVersion.Major -ge 6) {
         $IRMParams.SkipCertificateCheck = $true
