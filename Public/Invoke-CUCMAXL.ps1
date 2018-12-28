@@ -49,7 +49,12 @@ function Invoke-CUCMAXL {
     else {
         [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
     }
-    Invoke-restmethod @IRMParams |
-        Select-XML -XPath '//return' |
-        Select-Object -ExpandProperty Node
+    try {
+        Invoke-RestMethod @IRMParams |
+            Select-XML -XPath '//return' |
+            Select-Object -ExpandProperty Node
+    }
+    catch {
+        Write-warning "Failed to execute AXL entity $entity. Error: $($_.exception)"
+    }
 }
