@@ -39,6 +39,11 @@ Describe "Invoke-CucmAxl" {
         $splat = $($CucmAxlSplat)
         $splat['server'] = 'invalid'
         Invoke-CucmAxl @CucmAxlSplat 3> TestDrive:\Output.txt
-        Get-Content TestDrive:\Output.txt | Should -Be "Failed to execute AXL entity getPhone. Error: System.Management.Automation.RuntimeException: That's invalid sir!"
+        Get-Content TestDrive:\Output.txt | Should -BeLike "*That's invalid sir!"
+    }
+    It "Throws an exception when EnableException is set." {
+        $splat = $($CucmAxlSplat)
+        $splat['server'] = 'invalid'
+        Invoke-CucmAxl @CucmAxlSplat -EnableException | Should -Throw
     }
 }
