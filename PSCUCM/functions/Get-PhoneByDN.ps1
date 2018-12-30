@@ -24,11 +24,7 @@
     .EXAMPLE
     Get-PhoneByDN -DN 123 -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
 
-    .EXAMPLE
-    Get-PhoneByDN -DN 123 -server 'Cucm-Pub.example.com' -Credential (Get-Credential) -EnableException
-
-    .NOTES
-    These are the notes...
+    Get Phone with DN 123
     #>
     
     [CmdletBinding()]
