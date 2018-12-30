@@ -1,0 +1,11 @@
+﻿TOPIC
+	about_PSCUCM
+	
+SHORT DESCRIPTION
+	Explains how to use the PSCUCM powershell module
+	
+LONG DESCRIPTION
+	<Insert Content here>
+
+KEYWORDS
+	PSCUCM
