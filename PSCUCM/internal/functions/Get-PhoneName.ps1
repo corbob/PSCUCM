@@ -22,10 +22,10 @@
     Enable throwing of exception when API throws error.
 
     .EXAMPLE
-    This is an example
+    Get-PhoneName -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential)
 
     .EXAMPLE
-    This is another example...
+    Get-PhoneName -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential) -EnableException
     #>
     
     [CmdletBinding()]
