@@ -14,7 +14,9 @@
         $server,
         [Parameter(Mandatory = $true)]
         [pscredential]
-        $Credential
+        $Credential,
+        [switch]
+        $EnableException
     )
     $CUCMURL = "https://$server/axl/"
 
@@ -55,6 +57,7 @@
             Select-Object -ExpandProperty Node
     }
     catch {
-        Write-warning "Failed to execute AXL entity $entity. Error: $($_.exception)"
+        Stop-PSFFunction -Message "Failed to execute AXL entity $entity." -ErrorRecord $_ -EnableException $EnableException
+        return
     }
 }
