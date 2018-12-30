@@ -1,4 +1,35 @@
 ﻿function Invoke-CucmAxl {
+    <#
+    .SYNOPSIS
+    Invoke AXL request against a CUCM server
+    
+    .DESCRIPTION
+    Invoke AXL request against a CUCM server.
+    
+    .PARAMETER entity
+    AXL entity to request
+    
+    .PARAMETER parameters
+    Parameters for the AXL request
+    
+    .PARAMETER AXLVersion
+    Version of AXL
+    
+    .PARAMETER server
+    Server to query
+    
+    .PARAMETER Credential
+    Credential to use for API access
+    
+    .PARAMETER EnableException
+    Enable throwing of exception when API throws error.
+    
+    .EXAMPLE
+    Invoke-CucmAxl -entity 'getPhone' -parameters @{ name = 'SEP000000000000' } -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
+    
+    Invoke getPhone Entity with parameters...
+    #>
+    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
@@ -14,7 +45,9 @@
         $server,
         [Parameter(Mandatory = $true)]
         [pscredential]
-        $Credential
+        $Credential,
+        [switch]
+        $EnableException
     )
     $CUCMURL = "https://$server/axl/"
 
@@ -55,6 +88,7 @@
             Select-Object -ExpandProperty Node
     }
     catch {
-        Write-warning "Failed to execute AXL entity $entity. Error: $($_.exception)"
+        Stop-PSFFunction -Message "Failed to execute AXL entity $entity." -ErrorRecord $_ -EnableException $EnableException
+        return
     }
 }
