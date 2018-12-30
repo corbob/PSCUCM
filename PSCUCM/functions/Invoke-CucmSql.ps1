@@ -1,4 +1,4 @@
-function Invoke-CucmSql {
+﻿function Invoke-CucmSql {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
