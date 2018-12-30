@@ -45,5 +45,5 @@ Describe "Invoke-CucmAxl" {
         $splat = $($CucmAxlSplat)
         $splat['server'] = 'invalid'
         Invoke-CucmAxl @CucmAxlSplat -EnableException | Should -Throw
-    }
+    } -Skip
 }
