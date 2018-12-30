@@ -20,6 +20,12 @@
     
     .PARAMETER EnableException
     Enable throwing of exception when API throws error.
+
+    .EXAMPLE
+    This is an example
+
+    .EXAMPLE
+    This is another example...
     #>
     
     [CmdletBinding()]
