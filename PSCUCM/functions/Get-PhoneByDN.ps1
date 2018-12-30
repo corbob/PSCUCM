@@ -1,4 +1,30 @@
 ﻿function Get-PhoneByDN {
+    <#
+    .SYNOPSIS
+    Get the phone(s) based upon the DN
+    
+    .DESCRIPTION
+    Get the phone(s) based upon the DN
+    
+    .PARAMETER DN
+    Directory Number to lookup
+    
+    .PARAMETER AXLVersion
+    Version of AXL
+    
+    .PARAMETER server
+    Server to query
+    
+    .PARAMETER Credential
+    Credential to use for API access
+    
+    .PARAMETER EnableException
+    Enable throwing of exception when API throws error.
+    
+    .EXAMPLE
+    An example
+    #>
+    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]

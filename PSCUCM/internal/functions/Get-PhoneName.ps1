@@ -1,4 +1,27 @@
 ﻿function Get-PhoneName {
+    <#
+    .SYNOPSIS
+    Get Phone Name based off of DN
+    
+    .DESCRIPTION
+    Get Phone Name based off of DN
+    
+    .PARAMETER DN
+    Directory Number to get phone for
+    
+    .PARAMETER AXLVersion
+    Version of AXL
+    
+    .PARAMETER server
+    Server to query
+    
+    .PARAMETER Credential
+    Credential to use for API access
+    
+    .PARAMETER EnableException
+    Enable throwing of exception when API throws error.
+    #>
+    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
