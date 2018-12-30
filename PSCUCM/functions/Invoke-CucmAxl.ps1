@@ -1,4 +1,33 @@
 ﻿function Invoke-CucmAxl {
+    <#
+    .SYNOPSIS
+    Invoke AXL request against a CUCM server
+    
+    .DESCRIPTION
+    Invoke AXL request against a CUCM server.
+    
+    .PARAMETER entity
+    AXL entity to request
+    
+    .PARAMETER parameters
+    Parameters for the AXL request
+    
+    .PARAMETER AXLVersion
+    Version of AXL
+    
+    .PARAMETER server
+    Server to query
+    
+    .PARAMETER Credential
+    Credential to use for API access
+    
+    .PARAMETER EnableException
+    Enable throwing of exception when API throws error.
+    
+    .EXAMPLE
+    Invoke-CucmAxl -entity 'getPhone' -parameters @{ name = 'SEP000000000000' } -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
+    #>
+    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
