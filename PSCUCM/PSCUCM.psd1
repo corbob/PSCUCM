@@ -18,7 +18,7 @@
 	Copyright = 'Copyright (c) 2018 corbob'
 	
 	# Description of the functionality provided by this module
-	Description = 'Module for interfacing with the Cisco Unified Call Manager (CUCM) Administrative XML Service (AXL).''
+	Description = 'Module for interfacing with the Cisco Unified Call Manager (CUCM) Administrative XML Service (AXL).'
 	
 	# Minimum version of the Windows PowerShell engine required by this module
 	PowerShellVersion = '5.0'
