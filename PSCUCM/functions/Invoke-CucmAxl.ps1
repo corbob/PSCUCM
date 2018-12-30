@@ -29,6 +29,9 @@
 
     .EXAMPLE
     Invoke-CucmAxl -entity 'getPhone' -parameters @{ name = 'SEP000000000000' } -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
+
+    .NOTES
+    These are the notes...
     #>
     
     [CmdletBinding()]

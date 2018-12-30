@@ -26,6 +26,9 @@
 
     .EXAMPLE
     Get-PhoneName -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential) -EnableException
+
+    .NOTES
+    These are the notes...
     #>
     
     [CmdletBinding()]

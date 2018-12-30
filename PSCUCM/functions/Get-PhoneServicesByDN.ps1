@@ -26,6 +26,9 @@
 
     .EXAMPLE
     Get-PhoneServicesByDN -DN 123 -server 'Cucm-Pub.example.com' -Credential (Get-Credential) -EnableException
+    
+    .NOTES
+    These are the notes...
     #>
     
     [CmdletBinding()]

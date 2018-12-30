@@ -26,6 +26,9 @@
 
     .EXAMPLE
     Invoke-CucmSql -SqlQuery 'select name from devices where name = "SEP000000000000"'  -server 'Cucm-Pub.example.com' -Credential (Get-Credential) -EnableException
+
+    .NOTES
+    These are the notes...
     #>
     
     [CmdletBinding()]
