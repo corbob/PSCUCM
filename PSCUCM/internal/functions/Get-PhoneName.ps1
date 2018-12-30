@@ -24,11 +24,7 @@
     .EXAMPLE
     Get-PhoneName -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential)
 
-    .EXAMPLE
-    Get-PhoneName -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential) -EnableException
-
-    .NOTES
-    These are the notes...
+    Get the Phone Name for Directory Number 123
     #>
     
     [CmdletBinding()]
