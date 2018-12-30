@@ -16,7 +16,7 @@
     $CucmAxlSplat = @{
         'SqlQuery'   = @'
             SELECT device.name
-            FROM 
+            FROM
             device, numplan, devicenumplanmap
             WHERE
             devicenumplanmap.fkdevice = device.pkid
