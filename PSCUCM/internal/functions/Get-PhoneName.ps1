@@ -1,4 +1,4 @@
-﻿function Obtain-PhoneNameFromDN {
+﻿function Get-PhoneName {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
@@ -15,13 +15,13 @@
     )
     $CucmAxlSplat = @{
         'SqlQuery'   = @'
-            SELECT device.name 
+            SELECT device.name
             FROM 
             device, numplan, devicenumplanmap
             WHERE
-            devicenumplanmap.fkdevice = device.pkid 
-            AND 
-            devicenumplanmap.fknumplan = numplan.pkid 
+            devicenumplanmap.fkdevice = device.pkid
+            AND
+            devicenumplanmap.fknumplan = numplan.pkid
             AND
             numplan.dnorpattern = "{0}"
 '@ -f $DN
