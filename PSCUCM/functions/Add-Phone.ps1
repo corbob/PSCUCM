@@ -45,24 +45,6 @@
     $packetCaptureMode = 'None'
     $builtInBridgeStatus = 'Default'
     
-    $phonexml = @'
-    <class>Phone</class>
-    <devicePoolName>Default</devicePoolName>
-    <useTrustedRelayPoint>Default</useTrustedRelayPoint>
-    <commonPhoneConfigName>Standard Common Phone Profile</commonPhoneConfigName>
-    <packetCaptureMode>None</packetCaptureMode>
-    <name>BOTAME2</name>
-    <certificateOperation>No Pending Operation</certificateOperation>
-    <protocolSide>User</protocolSide>
-    <builtInBridgeStatus>Default</builtInBridgeStatus>
-    <phoneTemplateName>Standard Dual Mode for Android</phoneTemplateName>
-    <protocol>SIP</protocol>
-    <product>Cisco Dual Mode for Android</product>
-    <primaryPhoneName></primaryPhoneName>
-    <locationName>Hub_None</locationName>
-    <deviceMobilityMode>Default</deviceMobilityMode>
-'@
-    
     $CucmAxlSplat = @{
         entity          = 'addPhone'
         # parameters      = @{
