@@ -1,4 +1,4 @@
-function Add-Phone {
+﻿function Add-Phone {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
