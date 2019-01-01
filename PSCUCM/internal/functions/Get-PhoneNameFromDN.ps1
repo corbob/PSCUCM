@@ -1,4 +1,4 @@
-﻿function Get-PhoneName {
+﻿function Get-PhoneNameFromDN {
     <#
     .SYNOPSIS
     Get Phone Name based off of DN
@@ -22,7 +22,7 @@
     Enable throwing of exception when API throws error.
 
     .EXAMPLE
-    Get-PhoneName -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential)
+    Get-PhoneNameFromDN -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential)
 
     Get the Phone Name for Directory Number 123
     #>
