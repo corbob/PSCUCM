@@ -24,6 +24,9 @@
     .PARAMETER EnableException
     Enable throwing of exception when API throws error.
     
+    .PARAMETER OutputXml
+    Enable the output of the XML instead of the processing of the entity.
+    
     .EXAMPLE
     Invoke-CucmAxl -entity 'getPhone' -parameters @{ name = 'SEP000000000000' } -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
     
@@ -47,48 +50,55 @@
         [pscredential]
         $Credential,
         [switch]
-        $EnableException
+        $EnableException,
+        [switch]
+        $OutputXml
     )
-    $CUCMURL = "https://$server/axl/"
-
-    $headers = @{
-        'Content-Type' = 'text/xml; charset=utf-8'
-        SOAPAction     = '"CUCM:DB ver={0} {1}"' -f $AXLVersion, $entity
-    }
-    $params = foreach ($paramKey in $parameters.Keys) {
-        '<{0}>{1}</{0}>' -f $paramKey, $parameters[$paramKey]
+    $params = ''
+    foreach ($paramKey in $parameters.Keys) {
+        $params += '<{0}>{1}</{0}>' -f $paramKey, $parameters[$paramKey]
     }
     $body = @'
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/{0}">
-          <soapenv:Header/>
-          <soapenv:Body>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/{0}">
+        <soapenv:Header/>
+        <soapenv:Body>
             <ns:{1}>
-              {2}
+                {2}
             </ns:{1}>
-          </soapenv:Body>
-        </soapenv:Envelope>
+        </soapenv:Body>
+    </soapenv:Envelope>
 '@ -f $AXLVersion, $entity, $params
+    
+    if (-not $OutputXml) {
+        $CUCMURL = "https://$server/axl/"
 
-    $IRMParams = @{
-        Headers    = $headers
-        Body       = $body
-        Uri        = $CUCMURL
-        Method     = 'Post'
-        Credential = $Credential
-    }
-    if ($PSVersionTable.PSVersion.Major -ge 6) {
-        $IRMParams.SkipCertificateCheck = $true
+        $headers = @{
+            'Content-Type' = 'text/xml; charset=utf-8'
+        }
+        $IRMParams = @{
+            Headers    = $headers
+            Body       = $body
+            Uri        = $CUCMURL
+            Method     = 'Post'
+            Credential = $Credential
+        }
+        if ($PSVersionTable.PSVersion.Major -ge 6) {
+            $IRMParams.SkipCertificateCheck = $true
+        }
+        else {
+            [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+        }
+        try {
+            Invoke-RestMethod @IRMParams |
+                Select-XML -XPath '//return' |
+                Select-Object -ExpandProperty Node
+        }
+        catch {
+            Stop-PSFFunction -Message "Failed to execute AXL entity $entity." -ErrorRecord $_ -EnableException $EnableException
+            return
+        }
     }
     else {
-        [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-    }
-    try {
-        Invoke-RestMethod @IRMParams |
-            Select-XML -XPath '//return' |
-            Select-Object -ExpandProperty Node
-    }
-    catch {
-        Stop-PSFFunction -Message "Failed to execute AXL entity $entity." -ErrorRecord $_ -EnableException $EnableException
-        return
+        $body
     }
 }

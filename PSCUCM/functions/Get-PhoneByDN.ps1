@@ -44,7 +44,7 @@
         'server'     = $server
         'Credential' = $Credential
     }
-    $phoneName = Obtain-PhoneNameFromDN @phoneNameByDNSplat |
+    $phoneName = Get-PhoneNameFromDN @phoneNameByDNSplat |
         Select-Xml -XPath '//name' |
         Select-Object -ExpandProperty node |
         Select-Object -ExpandProperty '#text'
