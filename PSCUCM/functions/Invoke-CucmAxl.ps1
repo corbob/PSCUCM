@@ -22,7 +22,8 @@
     Credential to use for API access
     
     .PARAMETER EnableException
-    Enable throwing of exception when API throws error.
+    Replaces user friendly yellow warnings with bloody red exceptions of doom!
+    Use this if you want the function to throw terminating errors you want to catch.
     
     .PARAMETER OutputXml
     Enable the output of the XML instead of the processing of the entity.
@@ -80,8 +81,9 @@
 '@ -f $AXLVersion, $entity, $params
     
     if (-not $OutputXml) {
+        if($PSCmdlet.ShouldProcess($server, "Execute AXL query $entity")) {
+        
         $CUCMURL = "https://$server/axl/"
-
         $headers = @{
             'Content-Type' = 'text/xml; charset=utf-8'
         }
@@ -113,6 +115,7 @@
             }
             Stop-PSFFunction -Message $PSFMessage -ErrorRecord $_ -EnableException $EnableException
             return
+        }
         }
     }
     else {

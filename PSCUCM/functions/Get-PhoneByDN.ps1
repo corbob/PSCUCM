@@ -19,7 +19,11 @@
     Credential to use for API access
     
     .PARAMETER EnableException
-    Enable throwing of exception when API throws error.
+    Replaces user friendly yellow warnings with bloody red exceptions of doom!
+    Use this if you want the function to throw terminating errors you want to catch.
+    
+    .PARAMETER OutputXml
+    Enable the output of the XML instead of the processing of the entity.
     
     .EXAMPLE
     Get-PhoneByDN -DN 123 -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
@@ -37,12 +41,18 @@
         $server,
         [Parameter(Mandatory = $true)]
         [pscredential]
-        $Credential
+        $Credential,
+        [switch]
+        $EnableException,
+        [switch]
+        $OutputXml
     )
     $phoneNameByDNSplat = @{
-        'DN'         = $DN
-        'server'     = $server
-        'Credential' = $Credential
+        DN              = $DN
+        server          = $server
+        Credential      = $Credential
+        EnableException = $EnableException
+        OutputXml       = $OutputXml
     }
     $phoneName = Get-PhoneNameFromDN @phoneNameByDNSplat |
         Select-Xml -XPath '//name' |
