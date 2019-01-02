@@ -39,7 +39,7 @@
 	# FormatsToProcess = @('xml\PSCUCM.Format.ps1xml')
 	
 	# Functions to export from this module
-	FunctionsToExport = @('Get-PhoneByDN', 'Get-PhoneServicesByDN', 'Invoke-CucmAxl', 'Invoke-CucmSql')
+	FunctionsToExport = @('Get-PhoneByDN', 'Get-PhoneServicesByDN', 'Invoke-CucmAxl', 'Invoke-CucmSql','Add-Phone')
 	
 	# Cmdlets to export from this module
 	CmdletsToExport = ''

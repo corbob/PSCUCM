@@ -22,7 +22,8 @@
     Credential to use for API access
     
     .PARAMETER EnableException
-    Enable throwing of exception when API throws error.
+    Replaces user friendly yellow warnings with bloody red exceptions of doom!
+    Use this if you want the function to throw terminating errors you want to catch.
     
     .PARAMETER OutputXml
     Enable the output of the XML instead of the processing of the entity.
@@ -56,7 +57,17 @@
     )
     $params = ''
     foreach ($paramKey in $parameters.Keys) {
-        $params += '<{0}>{1}</{0}>' -f $paramKey, $parameters[$paramKey]
+        $inner = ''
+        if ($parameters[$paramKey].GetType() -eq [System.Collections.Hashtable]) {
+            $innerHash = $parameters[$paramKey]
+            foreach ($innerKey in $innerHash.Keys) {
+                $inner += '<{0}>{1}</{0}>' -f $innerKey, $innerHash[$innerKey]
+            }
+        }
+        else {
+            $inner = $parameters[$paramKey]
+        }
+        $params += '<{0}>{1}</{0}>' -f $paramKey, $inner
     }
     $body = @'
     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/{0}">
@@ -70,8 +81,9 @@
 '@ -f $AXLVersion, $entity, $params
     
     if (-not $OutputXml) {
+        if($PSCmdlet.ShouldProcess($server, "Execute AXL query $entity")) {
+        
         $CUCMURL = "https://$server/axl/"
-
         $headers = @{
             'Content-Type' = 'text/xml; charset=utf-8'
         }
@@ -89,13 +101,21 @@
             [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
         }
         try {
-            Invoke-RestMethod @IRMParams |
+            Invoke-WebRequest @IRMParams |
                 Select-XML -XPath '//return' |
                 Select-Object -ExpandProperty Node
         }
         catch {
-            Stop-PSFFunction -Message "Failed to execute AXL entity $entity." -ErrorRecord $_ -EnableException $EnableException
+            $ErrorMessage = $_.ErrorDetails.message
+            $PSFMessage = "Failed to execute AXL entity $entity."
+            if (($null -ne $ErrorMessage) -and ($_.Exception.Response.StatusCode -eq 'InternalServerError')) {
+                $axlcode = ($ErrorMessage | select-xml -XPath '//axlcode' | Select-Object -ExpandProperty Node).'#text'
+                $axlMessage = ($ErrorMessage | select-xml -XPath '//axlmessage' | Select-Object -ExpandProperty Node).'#text'
+                $PSFMessage += " AXL Error: $axlMessage ($axlcode)"
+            }
+            Stop-PSFFunction -Message $PSFMessage -ErrorRecord $_ -EnableException $EnableException
             return
+        }
         }
     }
     else {

@@ -20,16 +20,16 @@ Describe "Invoke-CucmAxl" {
             }
             credential = [System.Management.Automation.PSCredential]::new('user',(ConvertTo-SecureString 'pass' -AsPlainText -Force))
         }
-        Mock -CommandName Invoke-RestMethod -MockWith {
+        Mock -CommandName Invoke-WebRequest -MockWith {
             if($server -eq 'invalid') {
                 throw "That's invalid sir!"
             }
             Write-Output "<return>$body</return>"
         } -ModuleName PSCUCM        
     }
-    It "Calls Invoke-RestMethod" {
+    It "Calls Invoke-WebRequest" {
         Invoke-CucmAxl @CucmAxlSplat
-        Assert-MockCalled -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName PSCUCM
+        Assert-MockCalled -CommandName Invoke-WebRequest -Times 1 -Exactly -ModuleName PSCUCM
     }
     It "Returns appropriate XML" {
         $return = Invoke-CucmAxl @CucmAxlSplat

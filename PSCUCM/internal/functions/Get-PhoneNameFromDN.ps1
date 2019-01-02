@@ -19,7 +19,11 @@
     Credential to use for API access
     
     .PARAMETER EnableException
-    Enable throwing of exception when API throws error.
+    Replaces user friendly yellow warnings with bloody red exceptions of doom!
+    Use this if you want the function to throw terminating errors you want to catch.
+    
+    .PARAMETER OutputXml
+    Enable the output of the XML instead of the processing of the entity.
 
     .EXAMPLE
     Get-PhoneNameFromDN -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential)
@@ -39,10 +43,14 @@
         $AXLVersion = '11.5',
         [Parameter(Mandatory = $true)]
         [pscredential]
-        $Credential
+        $Credential,
+        [switch]
+        $EnableException,
+        [switch]
+        $OutputXml
     )
     $CucmAxlSplat = @{
-        'SqlQuery'   = @'
+        SqlQuery        = @'
             SELECT device.name
             FROM
             device, numplan, devicenumplanmap
@@ -53,9 +61,11 @@
             AND
             numplan.dnorpattern = "{0}"
 '@ -f $DN
-        'server'     = $server
-        'Credential' = $Credential
-        'AXLVersion' = $AXLVersion
+        server          = $server
+        Credential      = $Credential
+        AXLVersion      = $AXLVersion
+        EnableException = $EnableException
+        OutputXml       = $OutputXml
     }
     Invoke-CucmSql @CucmAxlSplat
 }
