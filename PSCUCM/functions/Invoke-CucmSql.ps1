@@ -19,7 +19,11 @@
     Credential to use for API access
     
     .PARAMETER EnableException
-    Enable throwing of exception when API throws error.
+    Replaces user friendly yellow warnings with bloody red exceptions of doom!
+    Use this if you want the function to throw terminating errors you want to catch.
+    
+    .PARAMETER OutputXml
+    Enable the output of the XML instead of the processing of the entity.
     
     .EXAMPLE
     Invoke-CucmSql -SqlQuery 'select name from devices where name = "SEP000000000000"'  -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
@@ -39,16 +43,22 @@
         $server,
         [Parameter(Mandatory = $true)]
         [pscredential]
-        $Credential
+        $Credential,
+        [switch]
+        $EnableException,
+        [switch]
+        $OutputXml
     )
     $CucmAxlSplat = @{
-        'server'     = $server
-        'entity'     = 'executeSQLQuery'
-        'parameters' = @{
-            'sql' = $SqlQuery
+        server     = $server
+        entity     = 'executeSQLQuery'
+        parameters = @{
+            sql = $SqlQuery
         }
-        'AXLVersion' = $AXLVersion
-        'Credential' = $Credential
+        AXLVersion = $AXLVersion
+        Credential = $Credential
+        EnableException = $EnableException
+        OutputXml       = $OutputXml
     }
     Invoke-CucmAxl @CucmAxlSplat
 }

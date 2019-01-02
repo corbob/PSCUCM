@@ -3,7 +3,7 @@
 	ModuleToProcess = 'PSCUCM.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '0.0.3'
+	ModuleVersion = '0.0.4'
 	
 	# ID used to uniquely identify this module
 	GUID = '6dce3384-d179-4bcd-92c0-445b281e4510'
@@ -39,7 +39,7 @@
 	# FormatsToProcess = @('xml\PSCUCM.Format.ps1xml')
 	
 	# Functions to export from this module
-	FunctionsToExport = @('Get-PhoneByDN', 'Get-PhoneServicesByDN', 'Invoke-CucmAxl', 'Invoke-CucmSql')
+	FunctionsToExport = @('Get-PhoneByDN', 'Get-PhoneServicesByDN', 'Invoke-CucmAxl', 'Invoke-CucmSql','Add-Phone')
 	
 	# Cmdlets to export from this module
 	CmdletsToExport = ''
