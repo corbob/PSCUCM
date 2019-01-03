@@ -3,7 +3,7 @@
 	ModuleToProcess = 'PSCUCM.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '0.0.4'
+	ModuleVersion = '0.0.5'
 	
 	# ID used to uniquely identify this module
 	GUID = '6dce3384-d179-4bcd-92c0-445b281e4510'
