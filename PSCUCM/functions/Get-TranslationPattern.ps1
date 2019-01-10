@@ -28,6 +28,8 @@
     .EXAMPLE
     An example
 
+    System Up Time: 	0d, 0h, 13m
+    
     #>
     [CmdletBinding()]
     param (

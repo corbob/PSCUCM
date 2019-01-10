@@ -31,9 +31,11 @@
     .EXAMPLE
     An example
 
+    System Up Time: 	0d, 0h, 13m
+
     #>
     
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Low')]
     param (
         [Parameter(Mandatory = $true)]
         [string]
@@ -69,6 +71,7 @@
     if($null -ne $calledPartyTransformationMask) {
         $invokeCucmAxlSplat.parameters.calledPartyTransformationMask = $calledPartyTransformationMask
     }
+    if($PSCmdlet.ShouldProcess($server, "Set Translation Pattern $TranslationPattern")) {
     Invoke-CucmAxl @invokeCucmAxlSplat
-   
+    }
 }
