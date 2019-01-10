@@ -1,4 +1,4 @@
-function Set-TranslationPattern {
+﻿function Set-TranslationPattern {
     <#
     .SYNOPSIS
     Set Translation Patten

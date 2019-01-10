@@ -1,4 +1,4 @@
-function Get-TranslationPattern {
+﻿function Get-TranslationPattern {
     <#
     .SYNOPSIS
     Get Translation Patten
