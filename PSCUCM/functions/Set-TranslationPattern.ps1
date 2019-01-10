@@ -27,6 +27,12 @@
     
     .PARAMETER OutputXml
     Enable the output of the XML instead of the processing of the entity.
+        
+    .PARAMETER WhatIf
+    What If?
+    
+    .PARAMETER Confirm
+    Confirm...
     
     .EXAMPLE
     An example
