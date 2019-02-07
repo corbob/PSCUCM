@@ -1,4 +1,4 @@
-﻿function Invoke-CucmSql {
+﻿function Invoke-PSCUCMSqlQuery {
     <#
     .SYNOPSIS
     Invoke a SQL Query against CUCM server using the AXL API
@@ -36,29 +36,30 @@
         [Parameter(Mandatory = $true)]
         [string]
         $SqlQuery,
-        [string]
-        $AXLVersion = '11.5',
-        [Parameter(Mandatory = $true)]
-        [string]
-        $server,
-        [Parameter(Mandatory = $true)]
-        [pscredential]
-        $Credential,
+        [Parameter(ParameterSetName = 'NotOutputXml')]
         [switch]
         $EnableException,
+        [Parameter(ParameterSetName = 'OutputXml')]
         [switch]
         $OutputXml
     )
+    $AXLVersion = Get-PSFConfigValue -FullName pscucm.axlversion
+    $Server = Get-PSFConfigValue -FullName pscucm.server
+    $Credential = Get-PSFConfigValue -FullName pscucm.credential
     $CucmAxlSplat = @{
-        server     = $server
         entity     = 'executeSQLQuery'
         parameters = @{
             sql = $SqlQuery
         }
         AXLVersion = $AXLVersion
-        Credential = $Credential
-        EnableException = $EnableException
-        OutputXml       = $OutputXml
     }
-    Invoke-CucmAxl @CucmAxlSplat
+    if (-not $OutputXml) {
+        $CucmAxlSplat.server = $server
+        $CucmAxlSplat.Credential = $Credential
+        $CucmAxlSplat.EnableException = $EnableException
+    }
+    else {
+        $CucmAxlSplat.OutputXml = $OutputXml
+    }
+    Invoke-PSCUCMAxlQuery @CucmAxlSplat
 }

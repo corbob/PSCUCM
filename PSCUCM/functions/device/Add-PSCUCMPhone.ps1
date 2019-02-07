@@ -1,4 +1,4 @@
-﻿function Add-Phone {
+﻿function Add-PSCUCMPhone {
     <#
     .SYNOPSIS
     Add a Phone to CUCM Environment
@@ -83,14 +83,16 @@
         $Protocol,
         [string]
         $AXLVersion = '11.5',
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true,ParameterSetName = 'NotOutputXml')]
         [string]
         $server,
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true,ParameterSetName = 'NotOutputXml')]
         [pscredential]
         $Credential,
+        [Parameter(ParameterSetName = 'NotOutputXml')]
         [switch]
         $EnableException,
+        [Parameter(ParameterSetName = 'OutputXml')]
         [switch]
         $OutputXml
     )
@@ -128,13 +130,14 @@
                 builtInBridgeStatus   = $builtInBridgeStatus
             }
         }
-        server          = $server
         AXLVersion      = $AXLVersion
-        Credential      = $Credential
-        EnableException = $EnableException
         OutputXml       = $OutputXml
     }
-        
-    Invoke-CucmAxl @CucmAxlSplat
+    if(-not $OutputXml) {
+        $CucmAxlSpla.Credential      = $Credential
+        $CucmAxlSpla.EnableException = $EnableException
+        $CucmAxlSpla.server          = $server
+    }    
+    Invoke-PSCUCMAxlQuery @CucmAxlSplat
     
 }

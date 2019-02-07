@@ -1,13 +1,13 @@
-﻿function Get-PhoneServicesByDN {
+﻿function Get-PSCUCMPhoneName {
     <#
     .SYNOPSIS
-    Get the services assigned to the phone based on the DN.
+    Get Phone Name based off of DN
     
     .DESCRIPTION
-    Get the services assigned to the phone based on the DN.
+    Get Phone Name based off of DN
     
     .PARAMETER DN
-    Directory Number to lookup
+    Directory Number to get phone for
     
     .PARAMETER AXLVersion
     Version of AXL
@@ -24,11 +24,11 @@
     
     .PARAMETER OutputXml
     Enable the output of the XML instead of the processing of the entity.
-    
-    .EXAMPLE
-    Get-PhoneServicesByDN -DN 123 -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
 
-    Get the Phone Services of phone with DN 123
+    .EXAMPLE
+    Get-PhoneNameFromDN -DN 123 -Server 'CUCM-PUB.example.com' -Credential (Get-Credential)
+
+    Get the Phone Name for Directory Number 123
     #>
     
     [CmdletBinding()]
@@ -39,6 +39,8 @@
         [Parameter(Mandatory = $true)]
         [string]
         $server,
+        [string]
+        $AXLVersion = '11.5',
         [Parameter(Mandatory = $true)]
         [pscredential]
         $Credential,
@@ -47,14 +49,23 @@
         [switch]
         $OutputXml
     )
-    $PhoneByDNSplat = @{
-        DN            = $DN
-        server        = $server
-        Credential    = $Credential
+    $CucmAxlSplat = @{
+        SqlQuery        = @'
+            SELECT device.name
+            FROM
+            device, numplan, devicenumplanmap
+            WHERE
+            devicenumplanmap.fkdevice = device.pkid
+            AND
+            devicenumplanmap.fknumplan = numplan.pkid
+            AND
+            numplan.dnorpattern = "{0}"
+'@ -f $DN
+        server          = $server
+        Credential      = $Credential
+        AXLVersion      = $AXLVersion
         EnableException = $EnableException
         OutputXml       = $OutputXml
     }
-    Get-PhoneByDN @PhoneByDNSplat |
-        Select-Xml -XPath '//service' |
-        Select-Object -ExpandProperty node
+    Invoke-PSCUCMSqlQuery @CucmAxlSplat
 }

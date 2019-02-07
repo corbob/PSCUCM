@@ -1,4 +1,4 @@
-﻿function Get-PhoneByDN {
+﻿function Get-PSCUCMPhone {
     <#
     .SYNOPSIS
     Get the phone(s) based upon the DN
@@ -48,13 +48,15 @@
         $OutputXml
     )
     $phoneNameByDNSplat = @{
-        DN              = $DN
-        server          = $server
-        Credential      = $Credential
-        EnableException = $EnableException
-        OutputXml       = $OutputXml
+        DN        = $DN
+        OutputXml = $OutputXml
     }
-    $phoneName = Get-PhoneNameFromDN @phoneNameByDNSplat |
+    if (-not $OutputXml) {
+        $phoneNameByDNSplat.server = $server
+        $phoneNameByDNSplat.Credential = $Credential
+        $phoneNameByDNSplat.EnableException = $EnableException
+    }
+    $phoneName = Get-PSCUCMPhoneName @phoneNameByDNSplat |
         Select-Xml -XPath '//name' |
         Select-Object -ExpandProperty node |
         Select-Object -ExpandProperty '#text'
@@ -66,5 +68,5 @@
         }
         'Credential' = $Credential
     }
-    Invoke-CucmAxl @CucmAxlSplat | Select-Xml -XPath '//phone' | Select-Object -ExpandProperty node
+    Invoke-PSCUCMAxlQuery @CucmAxlSplat | Select-Xml -XPath '//phone' | Select-Object -ExpandProperty node
 }
