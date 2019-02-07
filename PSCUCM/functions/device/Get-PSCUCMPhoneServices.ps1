@@ -1,4 +1,5 @@
 ﻿function Get-PSCUCMPhoneServices {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '', Justification = "CUCM returns to us all of the services. We can't pick and choose which ones to return.")]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
