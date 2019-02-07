@@ -9,7 +9,7 @@ $global:FunctionHelpTestExceptions = @(
   'Set-PSCUCMTranslationPattern',
   'Invoke-PSCUCMLdapSync',
   'Connect-PSCucm',
-  'Get-PSCUCMPhone'
+  'Get-PSCUCMPhoneName'
 )
 
 <#
