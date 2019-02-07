@@ -47,18 +47,8 @@ function Invoke-PSCUCMLdapSync {
         $LdapDirectory,
         [switch]
         $cancelActive,
-        [string]
-        $AXLVersion = '11.5',
-        [Parameter(Mandatory = $true, ParameterSetName = 'NotOutputXml')]
-        [string]
-        $server,
-        [Parameter(Mandatory = $true, ParameterSetName = 'NotOutputXml')]
-        [pscredential]
-        $Credential,
-        [Parameter(, ParameterSetName = 'NotOutputXml')]
         [switch]
         $EnableException,
-        [Parameter(ParameterSetName = 'OutputXml')]
         [switch]
         $OutputXml
     )
@@ -68,12 +58,9 @@ function Invoke-PSCUCMLdapSync {
             name = $LdapDirectory
             sync = $true
         }
+        AXLVersion = Get-PSFConfigValue -FullName pscucm.axlversion
         OutputXml  = $OutputXml
-    }
-    if (-not $OutputXml) {
-        $invokeCucmAxlSplat.server = $server
-        $invokeCucmAxlSplat.Credential = $Credential
-        $invokeCucmAxlSplat.EnableException = $EnableException
+        EnableException = $EnableException
     }
     if ($cancelActive.IsPresent) {
         $invokeCucmAxlSplat.parameters.sync = $false

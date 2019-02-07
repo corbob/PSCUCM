@@ -21,7 +21,4 @@ Describe "Invoke-PSCUCMAxlQuery" {
     It "Correctly set the connected status" {
         Get-PSFConfigValue -FullName 'pscucm.connected' | Should -BeTrue
     }
-    It "Correctly set the EnableException switch" {
-        Get-PSFConfigValue -FullName 'pscucm.enableexception' | Should -BeFalse
-    }
 }

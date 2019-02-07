@@ -1,60 +1,18 @@
 ﻿function Get-PSCUCMPhone {
-    <#
-    .SYNOPSIS
-    Get the phone(s) based upon the DN
-    
-    .DESCRIPTION
-    Get the phone(s) based upon the DN
-    
-    .PARAMETER DN
-    Directory Number to lookup
-    
-    .PARAMETER AXLVersion
-    Version of AXL
-    
-    .PARAMETER server
-    Server to query
-    
-    .PARAMETER Credential
-    Credential to use for API access
-    
-    .PARAMETER EnableException
-    Replaces user friendly yellow warnings with bloody red exceptions of doom!
-    Use this if you want the function to throw terminating errors you want to catch.
-    
-    .PARAMETER OutputXml
-    Enable the output of the XML instead of the processing of the entity.
-    
-    .EXAMPLE
-    Get-PhoneByDN -DN 123 -server 'Cucm-Pub.example.com' -Credential (Get-Credential)
-
-    Get Phone with DN 123
-    #>
-    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
         [string]
         $DN,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $server,
-        [Parameter(Mandatory = $true)]
-        [pscredential]
-        $Credential,
         [switch]
         $EnableException,
         [switch]
         $OutputXml
     )
     $phoneNameByDNSplat = @{
-        DN        = $DN
-        OutputXml = $OutputXml
-    }
-    if (-not $OutputXml) {
-        $phoneNameByDNSplat.server = $server
-        $phoneNameByDNSplat.Credential = $Credential
-        $phoneNameByDNSplat.EnableException = $EnableException
+        DN              = $DN
+        OutputXml       = $OutputXml
+        EnableException = $EnableException
     }
     $phoneName = Get-PSCUCMPhoneName @phoneNameByDNSplat |
         Select-Xml -XPath '//name' |

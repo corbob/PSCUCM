@@ -1,63 +1,4 @@
 ﻿function Add-PSCUCMPhone {
-    <#
-    .SYNOPSIS
-    Add a Phone to CUCM Environment
-    
-    .DESCRIPTION
-    Add a Phone to CUCM Environment
-    
-    .PARAMETER MacAddress
-    MacAddress for the phone
-    
-    .PARAMETER Product
-    Product
-    
-    .PARAMETER protocolSide
-    Protocol Side (User?)
-    
-    .PARAMETER devicePoolName
-    Name of DevicePool to put phone in.
-    
-    .PARAMETER commonPhoneConfigName
-    Parameter description
-    
-    .PARAMETER phoneTemplateName
-    Parameter description
-    
-    .PARAMETER Protocol
-    Parameter description
-    
-    .PARAMETER AXLVersion
-    Version of AXL
-    
-    .PARAMETER server
-    Server to query
-    
-    .PARAMETER Credential
-    Credential to use for API access
-    
-    .PARAMETER EnableException
-    Replaces user friendly yellow warnings with bloody red exceptions of doom!
-    Use this if you want the function to throw terminating errors you want to catch.
-    
-    .PARAMETER OutputXml
-    Enable the output of the XML instead of the processing of the entity.
-    
-    .PARAMETER WhatIf
-    What If?
-    
-    .PARAMETER Confirm
-    Confirm...
-    
-    .EXAMPLE
-    An example
-    
-    with more here...
-    
-    .NOTES
-    General notes
-    #>
-    
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
     param (
         [Parameter(Mandatory = $true)]
@@ -81,18 +22,8 @@
         [Parameter(Mandatory = $true)]
         [string]
         $Protocol,
-        [string]
-        $AXLVersion = '11.5',
-        [Parameter(Mandatory = $true,ParameterSetName = 'NotOutputXml')]
-        [string]
-        $server,
-        [Parameter(Mandatory = $true,ParameterSetName = 'NotOutputXml')]
-        [pscredential]
-        $Credential,
-        [Parameter(ParameterSetName = 'NotOutputXml')]
         [switch]
         $EnableException,
-        [Parameter(ParameterSetName = 'OutputXml')]
         [switch]
         $OutputXml
     )
@@ -130,14 +61,9 @@
                 builtInBridgeStatus   = $builtInBridgeStatus
             }
         }
-        AXLVersion      = $AXLVersion
         OutputXml       = $OutputXml
+        EnableException = $EnableException
     }
-    if(-not $OutputXml) {
-        $CucmAxlSpla.Credential      = $Credential
-        $CucmAxlSpla.EnableException = $EnableException
-        $CucmAxlSpla.server          = $server
-    }    
     Invoke-PSCUCMAxlQuery @CucmAxlSplat
     
 }

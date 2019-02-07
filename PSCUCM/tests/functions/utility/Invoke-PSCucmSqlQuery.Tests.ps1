@@ -12,22 +12,23 @@ Describe "Invoke-PSCUCMSqlQuery" {
     </soapenv:Body>
 </soapenv:Envelope>
 '@
-        $invokePSCucmSqlQuerySplat = @{
-            server     = '127.0.0.1'
-            credential = [System.Management.Automation.PSCredential]::new('user', (ConvertTo-SecureString 'pass' -AsPlainText -Force))
-        }
         $CucmSqlSplat = @{
-            AXLVersion = 11.5
             SqlQuery   = 'MyName'
         }
+        $ConnectPSCucmSplat = @{
+            AXLVersion = '11.5'
+            Server     = '127.0.0.1'
+            Credential = [System.Management.Automation.PSCredential]::new('user',(ConvertTo-SecureString 'pass' -AsPlainText -Force))
+        }
+        Connect-PSCucm @ConnectPSCucmSplat
         Mock -CommandName Invoke-WebRequest -MockWith {
             if ($server -eq 'invalid') {
                 throw "That's invalid sir!"
             }
-        } -ModuleName PSCUCM        
+        } -ModuleName PSCUCM
     }
     It "Calls Invoke-WebRequest" {
-        Invoke-PSCUCMSqlQuery @invokePSCucmSqlQuerySplat @CucmSqlSplat
+        Invoke-PSCUCMSqlQuery @CucmSqlSplat
         Assert-MockCalled -CommandName Invoke-WebRequest -Times 1 -Exactly -ModuleName PSCUCM
     }
     It "Returns appropriate XML" {
@@ -35,7 +36,8 @@ Describe "Invoke-PSCUCMSqlQuery" {
         $return.OuterXml | Should -Be $AxlReturn.OuterXml
     }
     It "Throws an exception when EnableException is set." {
-        $invokePSCucmSqlQuerySplat['server'] = 'invalid'
-        { Invoke-PSCUCMSqlQuery @invokePSCucmSqlQuerySplat @CucmSqlSplat -EnableException } | Should -Throw
+        $ConnectPSCucmSplat.Server = 'invalid'
+        Connect-PSCucm @ConnectPSCucmSplat
+        { Invoke-PSCUCMSqlQuery @CucmSqlSplat -EnableException } | Should -Throw
     }
 }
