@@ -21,23 +21,14 @@ Describe "Invoke-PSCUCMSqlQuery" {
             Credential = [System.Management.Automation.PSCredential]::new('user',(ConvertTo-SecureString 'pass' -AsPlainText -Force))
         }
         Connect-PSCucm @ConnectPSCucmSplat
-        Mock -CommandName Invoke-WebRequest -MockWith {
-            if ($server -eq 'invalid') {
-                throw "That's invalid sir!"
-            }
-        } -ModuleName PSCUCM
-    }
-    It "Calls Invoke-WebRequest" {
-        Invoke-PSCUCMSqlQuery @CucmSqlSplat
-        Assert-MockCalled -CommandName Invoke-WebRequest -Times 1 -Exactly -ModuleName PSCUCM
     }
     It "Returns appropriate XML" {
         [xml]$return = Invoke-PSCUCMSqlQuery @CucmSqlSplat -OutputXml
         $return.OuterXml | Should -Be $AxlReturn.OuterXml
     }
-    It "Throws an exception when EnableException is set." {
-        $ConnectPSCucmSplat.Server = 'invalid'
-        Connect-PSCucm @ConnectPSCucmSplat
-        { Invoke-PSCUCMSqlQuery @CucmSqlSplat -EnableException } | Should -Throw
+    It "Calls Invoke-PSCUCMAxlQuery" {
+        Mock -CommandName Invoke-PSCUCMAxlQuery -MockWith {} -ModuleName PSCUCM
+        Invoke-PSCUCMSqlQuery @CucmSqlSplat
+        Assert-MockCalled -CommandName Invoke-PSCUCMAxlQuery -Times 1 -Exactly -ModuleName PSCUCM
     }
 }

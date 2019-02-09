@@ -56,11 +56,13 @@
                 Method     = 'Post'
                 Credential = $Credential
             }
-            if ($PSVersionTable.PSVersion.Major -ge 6) {
-                $IRMParams.SkipCertificateCheck = $true
-            }
-            else {
-                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+            if (Get-PSFConfigValue -FullName pscucm.skipcertificatecheck) {
+                if ($PSVersionTable.PSVersion.Major -ge 6) {
+                    $IRMParams.SkipCertificateCheck = $true
+                }
+                else {
+                    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+                }
             }
             try {
                 Invoke-WebRequest @IRMParams |

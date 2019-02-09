@@ -18,7 +18,6 @@
             routePartitionName = $RoutePartitionName
         }
         OutputXml       = $OutputXml
-        AXLVersion      = Get-PSFConfigValue -FullName pscucm.axlversion
         EnableException = $EnableException
     }
     Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat

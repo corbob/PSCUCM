@@ -1,4 +1,4 @@
-function Invoke-PSCUCMLdapSync {
+﻿function Invoke-PSCUCMLdapSync {
     <#
     .SYNOPSIS
     Invoke sync of LDAP Directory
@@ -46,7 +46,7 @@ function Invoke-PSCUCMLdapSync {
         [string]
         $LdapDirectory,
         [switch]
-        $cancelActive,
+        $CancelActive,
         [switch]
         $EnableException,
         [switch]
@@ -58,7 +58,6 @@ function Invoke-PSCUCMLdapSync {
             name = $LdapDirectory
             sync = $true
         }
-        AXLVersion = Get-PSFConfigValue -FullName pscucm.axlversion
         OutputXml  = $OutputXml
         EnableException = $EnableException
     }

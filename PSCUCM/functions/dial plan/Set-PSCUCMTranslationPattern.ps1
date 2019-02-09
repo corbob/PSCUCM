@@ -5,9 +5,9 @@
         [string]
         $TranslationPattern,
         [string]
-        $RoutePartitionName,
+        $RoutePartitionName = $null,
         [string]
-        $CalledPartyTransformationMask,
+        $CalledPartyTransformationMask = $null,
         [switch]
         $EnableException,
         [switch]
@@ -18,14 +18,13 @@
         parameters      = @{
             pattern = $TranslationPattern
         }
-        AXLVersion      = Get-PSFConfigValue -FullName pscucm.axlversion
         EnableException = $EnableException
         OutputXml       = $OutputXml
     }
-    if ($null -ne $RoutePartitionName) {
+    if ($RoutePartitionName) {
         $invokeCucmAxlSplat.parameters.routePartitionName = $RoutePartitionName
     }
-    if ($null -ne $calledPartyTransformationMask) {
+    if ($calledPartyTransformationMask) {
         $invokeCucmAxlSplat.parameters.calledPartyTransformationMask = $calledPartyTransformationMask
     }
     if ($PSCmdlet.ShouldProcess($server, "Set Translation Pattern $TranslationPattern")) {

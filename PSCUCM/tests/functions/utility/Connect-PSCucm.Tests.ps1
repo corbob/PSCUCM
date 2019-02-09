@@ -3,9 +3,10 @@ Import-Module $PSScriptRoot\..\..\..\PSCUCM.psd1 -Force
 Describe "Invoke-PSCUCMAxlQuery" {
     BeforeAll {
         $connectPSCucmSplat = @{
-            AXLVersion = 11.5
-            server     = '127.0.0.1'
-            credential = [System.Management.Automation.PSCredential]::new('user',(ConvertTo-SecureString 'pass' -AsPlainText -Force))
+            AXLVersion           = 11.5
+            Server               = '127.0.0.1'
+            Credential           = [System.Management.Automation.PSCredential]::new('user', (ConvertTo-SecureString 'pass' -AsPlainText -Force))
+            SkipCertificateCheck = $true
         }
         Connect-PSCucm @connectPSCucmSplat
     }
@@ -20,5 +21,8 @@ Describe "Invoke-PSCUCMAxlQuery" {
     }
     It "Correctly set the connected status" {
         Get-PSFConfigValue -FullName 'pscucm.connected' | Should -BeTrue
+    }
+    It "Correctly set the certificate check" {
+        Get-PSFConfigValue -FullName 'pscucm.skipcertificatecheck' | Should -BeTrue
     }
 }
