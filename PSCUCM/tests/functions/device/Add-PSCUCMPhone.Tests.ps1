@@ -1,6 +1,6 @@
 ﻿Import-Module $PSScriptRoot\..\..\..\PSCUCM.psd1 -Force
 
-Describe "Invoke-PSCucmLdapSync" {
+Describe "Add-PSCUCMPhone" {
     BeforeAll {
         [xml]$AxlReturn = @'
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/11.5">
