@@ -3,7 +3,7 @@
     ModuleToProcess   = 'PSCUCM.psm1'
 	
     # Version number of this module.
-    ModuleVersion     = '0.0.6'
+    ModuleVersion     = '0.1.0'
 	
     # ID used to uniquely identify this module
     GUID              = '6dce3384-d179-4bcd-92c0-445b281e4510'
@@ -26,7 +26,7 @@
     # Modules that must be imported into the global environment prior to importing
     # this module
     RequiredModules   = @(
-        @{ ModuleName = 'PSFramework'; ModuleVersion = '0.10.31.176' }
+        @{ ModuleName = 'PSFramework'; ModuleVersion = '0.10.31.179' }
     )
 	
     # Assemblies that must be loaded prior to importing this module
