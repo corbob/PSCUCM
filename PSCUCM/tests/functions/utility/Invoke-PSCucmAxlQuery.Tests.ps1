@@ -53,4 +53,7 @@ Describe "Invoke-PSCUCMAxlQuery" {
         Connect-PSCucm @ConnectPSCucmSplat
         { Invoke-PSCUCMAxlQuery @invokePSCucmAxlQuerySplat -EnableException } | Should -Throw
     }
+    AfterAll {
+        Disconnect-PSCucm
+    }
 }

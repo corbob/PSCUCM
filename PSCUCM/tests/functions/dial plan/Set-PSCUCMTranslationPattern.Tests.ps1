@@ -17,6 +17,12 @@ Describe "Set-PSCUCMTranslationPattern" {
             RoutePartition                = 'RoutePartition'
             CalledPartyTransformationMask = 'CalledPartyTransformationMask'
         }
+        $ConnectPSCucmSplat = @{
+            AXLVersion = '11.5'
+            Server     = '127.0.0.1'
+            Credential = [System.Management.Automation.PSCredential]::new('user',(ConvertTo-SecureString 'pass' -AsPlainText -Force))
+        }
+        Connect-PSCucm @ConnectPSCucmSplat
     }
     It "Returns appropriate XML for setting a TranslationPattern" {
         [xml]$return = Set-PSCUCMTranslationPattern @setPSCUCMTranslationPatternSplat -OutputXML
@@ -38,5 +44,8 @@ Describe "Set-PSCUCMTranslationPattern" {
         Mock -CommandName Invoke-PSCUCMAxlQuery -MockWith {} -ModuleName PSCUCM
         Set-PSCUCMTranslationPattern @setPSCUCMTranslationPatternSplat
         Assert-MockCalled -CommandName Invoke-PSCUCMAxlQuery -Times 1 -Exactly -ModuleName PSCUCM
+    }
+    AfterAll {
+        Disconnect-PSCucm
     }
 }

@@ -25,4 +25,7 @@ Describe "Invoke-PSCUCMAxlQuery" {
     It "Correctly set the certificate check" {
         Get-PSFConfigValue -FullName 'pscucm.skipcertificatecheck' | Should -BeTrue
     }
+    AfterAll {
+        Disconnect-PSCucm
+    }
 }

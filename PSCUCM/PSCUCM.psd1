@@ -40,15 +40,16 @@
 	
     # Functions to export from this module
     FunctionsToExport = @(
-        'Get-PSCUCMPhone',
-        'Get-PSCUCMPhoneServices', 
-        'Invoke-PSCUCMAxlQuery',
-        'Invoke-PSCUCMSqlQuery',
-        'Add-PSCUCMPhone',
-        'Get-PSCUCMTranslationPattern',
-        'Set-PSCUCMTranslationPattern',
-        'Invoke-PSCUCMLdapSync',
+        'Get-PSCUCMPhone'
+        'Get-PSCUCMPhoneServices'
+        'Invoke-PSCUCMAxlQuery'
+        'Invoke-PSCUCMSqlQuery'
+        'Add-PSCUCMPhone'
+        'Get-PSCUCMTranslationPattern'
+        'Set-PSCUCMTranslationPattern'
+        'Invoke-PSCUCMLdapSync'
         'Connect-PSCucm'
+        'Disconnect-PSCucm'
     )
 	
     # Cmdlets to export from this module

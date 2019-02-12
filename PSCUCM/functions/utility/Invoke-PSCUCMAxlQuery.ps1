@@ -14,9 +14,14 @@
         $OutputXml
     )
     $AXLVersion = Get-PSFConfigValue -FullName pscucm.axlversion
-    $Server = Get-PSFConfigValue -FullName pscucm.server
-    $Credential = Get-PSFConfigValue -FullName pscucm.credential
-    $EnableException = $EnableException -or $(Get-PSFConfigValue -FullName pscucm.enableexception)
+    if (-not $OutputXml) {
+        $EnableException = $EnableException -or $(Get-PSFConfigValue -FullName pscucm.enableexception)
+        if (-not (Get-PSFConfigValue -FullName pscucm.connected)) {
+            Stop-PSFFunction -Message "Unable to process AXL request. Not connected." -EnableException $EnableException
+        }
+        $Server = Get-PSFConfigValue -FullName pscucm.server
+        $Credential = Get-PSFConfigValue -FullName pscucm.credential
+    }
     $params = ''
     foreach ($paramKey in $Parameters.Keys) {
         $inner = ''

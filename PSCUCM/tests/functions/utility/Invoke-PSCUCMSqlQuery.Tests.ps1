@@ -31,4 +31,7 @@ Describe "Invoke-PSCUCMSqlQuery" {
         Invoke-PSCUCMSqlQuery @CucmSqlSplat
         Assert-MockCalled -CommandName Invoke-PSCUCMAxlQuery -Times 1 -Exactly -ModuleName PSCUCM
     }
+    AfterAll {
+        Disconnect-PSCucm
+    }
 }
