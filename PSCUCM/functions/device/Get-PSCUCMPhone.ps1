@@ -19,12 +19,10 @@
         Select-Object -ExpandProperty node |
         Select-Object -ExpandProperty '#text'
     $CucmAxlSplat = @{
-        'server'     = $server
         'entity'     = 'getPhone'
         'parameters' = @{
             'name' = $phoneName
         }
-        'Credential' = $Credential
     }
     Invoke-PSCUCMAxlQuery @CucmAxlSplat | Select-Xml -XPath '//phone' | Select-Object -ExpandProperty node
 }
