@@ -19,7 +19,7 @@ Function ConvertTo-XMLString
     Internal use, this is a recursive function 
 .PARAMETER Root
     Internal use, this is a recursive function
-    .NOTES
+.NOTES
     Provided by Ish__ in PowerShell Discord (https://pwsh.ca/discord): https://gist.github.com/charlieschmidt/57292a97a3a8760e4baaffba425e5010
 #>
     [cmdletbinding()]

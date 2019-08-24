@@ -60,8 +60,15 @@
                 $ErrorMessage = $_.ErrorDetails.message
                 $PSFMessage = "Failed to execute AXL entity $Entity."
                 if (($null -ne $ErrorMessage) -and ($_.Exception.Response.StatusCode -eq 'InternalServerError')) {
-                    $axlcode = ($ErrorMessage | select-xml -XPath '//axlcode' | Select-Object -ExpandProperty Node).'#text'
-                    $axlMessage = ($ErrorMessage | select-xml -XPath '//axlmessage' | Select-Object -ExpandProperty Node).'#text'
+                    if ($PSVersionTable.PSVersion.Major -ge 6) {
+                        $null = $ErrorMessage -match "(\d+)(.*)$Entity"
+                        $axlcode = $Matches[1]
+                        $axlMessage = $Matches[2]
+                    }
+                    else {
+                        $axlcode = ($ErrorMessage | select-xml -XPath '//axlcode' | Select-Object -ExpandProperty Node).'#text'
+                        $axlMessage = ($ErrorMessage | select-xml -XPath '//axlmessage' | Select-Object -ExpandProperty Node).'#text'
+                    }
                     $PSFMessage += " AXL Error: $axlMessage ($axlcode)"
                 }
                 Stop-PSFFunction -Message $PSFMessage -ErrorRecord $_ -EnableException $EnableException
