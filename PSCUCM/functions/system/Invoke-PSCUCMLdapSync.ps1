@@ -24,10 +24,7 @@
     .PARAMETER EnableException
     Replaces user friendly yellow warnings with bloody red exceptions of doom!
     Use this if you want the function to throw terminating errors you want to catch.
-    
-    .PARAMETER OutputXml
-    Enable the output of the XML instead of the processing of the entity.
-        
+
     .PARAMETER WhatIf
     What If?
     
@@ -48,9 +45,7 @@
         [switch]
         $CancelActive,
         [switch]
-        $EnableException,
-        [switch]
-        $OutputXml
+        $EnableException
     )
     $invokeCucmAxlSplat = @{
         entity     = 'doLdapSync'
@@ -58,7 +53,6 @@
             name = $LdapDirectory
             sync = $true
         }
-        OutputXml  = $OutputXml
         EnableException = $EnableException
     }
     if ($cancelActive.IsPresent) {

@@ -9,9 +9,7 @@
         [string]
         $CalledPartyTransformationMask = $null,
         [switch]
-        $EnableException,
-        [switch]
-        $OutputXml
+        $EnableException
     )
     $invokeCucmAxlSplat = @{
         entity          = 'updateTransPattern'
@@ -19,7 +17,6 @@
             pattern = $TranslationPattern
         }
         EnableException = $EnableException
-        OutputXml       = $OutputXml
     }
     if ($RoutePartitionName) {
         $invokeCucmAxlSplat.parameters.routePartitionName = $RoutePartitionName

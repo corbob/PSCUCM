@@ -4,9 +4,7 @@
         [string]
         $RoutePartitionName,
         [switch]
-        $EnableException,
-        [switch]
-        $OutputXml
+        $EnableException
     )
     $invokeCucmAxlSplat = @{
         entity          = 'getTransPattern'
@@ -14,7 +12,6 @@
             pattern            = $TranslationPattern
             routePartitionName = $RoutePartitionName
         }
-        OutputXml       = $OutputXml
         EnableException = $EnableException
     }
     Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat
