@@ -1,7 +1,9 @@
-Function ConvertTo-XMLString 
+﻿Function ConvertTo-XMLString
 {
 <#
 .SYNOPSIS
+    Outputs a human readable simple text XML representation of a simple PS object.
+.DESCRIPTION
     Outputs a human readable simple text XML representation of a simple PS object.
 .PARAMETER InputObject
     The input object to inspect and dump.
@@ -16,9 +18,13 @@ Function ConvertTo-XMLString
 .PARAMETER DateFormat
     Optional.  DateFormat string to use for datetime properties
 .PARAMETER IndentLevel
-    Internal use, this is a recursive function 
+    Internal use, this is a recursive function
 .PARAMETER Root
     Internal use, this is a recursive function
+.EXAMPLE
+    Something, somelthing
+
+    Does something
 .NOTES
     Provided by Ish__ in PowerShell Discord (https://pwsh.ca/discord): https://gist.github.com/charlieschmidt/57292a97a3a8760e4baaffba425e5010
 #>
@@ -50,7 +56,7 @@ Function ConvertTo-XMLString
         $IndentString = ("`t" * $IndentLevel)
 
 	    # Output the root element opening tag
-	    if ($Root) 
+	    if ($Root)
         {
             $RootElement = $ObjectName
 
@@ -63,7 +69,7 @@ Function ConvertTo-XMLString
             }
             $OutputStrings.Add("<$RootElement>")
 	    }
- 
+
         # Iterate through all of the note properties in the object.
         $Properties = @()
         if ($InputObject.GetType().Name -eq "Hashtable" -or $InputObject.GetType().Name -eq "OrderedDictionary")
@@ -91,20 +97,20 @@ Function ConvertTo-XMLString
         {
             $OutputStrings.Add($PropertyValueString)
         }
-        else 
+        else
         {
-            foreach ($Property in $Properties) 
+            foreach ($Property in $Properties)
             {
                 if ($ExcludeProperty -inotcontains $Property)
                 {
                     $PropertyValue = $InputObject.($Property)
-    
+
                     # Check if the property is an object and we want to dig into it
                     if ($null -eq $PropertyValue)
                     {
                         $OutputStrings.Add("$IndentString<$Property />")
                     }
-                    elseif ($PropertyValue.GetType().Name -eq "PSCustomObject" -or $PropertyValue.gettype().name -eq "Hashtable" -or $PropertyValue.GetType().Name -eq "OrderedDictionary") 
+                    elseif ($PropertyValue.GetType().Name -eq "PSCustomObject" -or $PropertyValue.gettype().name -eq "Hashtable" -or $PropertyValue.GetType().Name -eq "OrderedDictionary")
                     { # is object, so dig in, with wrapping xml tags
                         $OutputStrings.Add("$IndentString<$Property>")
                         $PropertyXml = ConvertTo-XMLString -InputObject $PropertyValue -Root $false -IndentLevel ($IndentLevel + 1) -DateFormat $DateFormat  -BooleanValuesAsLowercase:$BooleanValuesAsLowercase
@@ -115,7 +121,7 @@ Function ConvertTo-XMLString
                     { # is array, so get value for each element in array, then wrap total (if those were objects) or wrap individually (if they were strings/ints/etc)
                         $PropertyXml = @()
                         $SubObjectPropertyNames = @()
-                        foreach ($APropertyValue in $PropertyValue) 
+                        foreach ($APropertyValue in $PropertyValue)
                         {
                             $ValueIsObject = $false
                             if ($APropertyValue.gettype().name -eq "PSCustomObject" -or $APropertyValue.gettype().name -eq "Hashtable" -or $APropertyValue.GetType().Name -eq "OrderedDictionary")
@@ -161,7 +167,7 @@ Function ConvertTo-XMLString
                                     $OutputStrings.Add("$IndentString</$Property>")
                                 }
                             }
-                            else 
+                            else
                             {
                                 foreach ($PropertyXmlString in $PropertyXml)
                                 {
@@ -174,7 +180,7 @@ Function ConvertTo-XMLString
                             $OutputStrings.Add("$IndentString<$Property />")
                         }
                     }
-                    else    
+                    else
                     { # else plain old property
                         $PropertyXml = ConvertTo-XMLString -InputObject $PropertyValue -Root $false -DateFormat $DateFormat -BooleanValuesAsLowercase:$BooleanValuesAsLowercase -IndentLevel ($IndentLevel + 1)
                         $OutputStrings.Add("$IndentString<$Property>$PropertyXml</$Property>")
@@ -182,9 +188,9 @@ Function ConvertTo-XMLString
                 }
             }
         }
- 
+
 	    # Output the root element closing tag
-	    if ($Root) 
+	    if ($Root)
         {
             $OutputStrings.Add("</$ObjectName>")
 	    }
@@ -192,6 +198,6 @@ Function ConvertTo-XMLString
 
     End
     {
-        $OutputStrings.ToArray() -join "`n" | Write-Output
+        $OutputStrings.ToArray() -join "`n"
     }
 }
