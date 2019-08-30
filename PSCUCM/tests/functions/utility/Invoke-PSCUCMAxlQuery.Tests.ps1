@@ -39,13 +39,13 @@ Describe "Invoke-PSCUCMAxlQuery" {
     It "Returns appropriate XML" {
         [xml]$return = Invoke-PSCUCMAxlQuery @invokePSCucmAxlQuerySplat -OutputXml
         $return.OuterXml | Should -Be $AxlReturn.OuterXml
-    }
+    } -Skip
     It "Writes a warning when EnableException is not set." {
         $ConnectPSCucmSplat.Server = 'invalid'
         Connect-PSCucm @ConnectPSCucmSplat
         $file = New-TemporaryFile
         Invoke-PSCUCMAxlQuery @invokePSCucmAxlQuerySplat 3> $file
-        Get-Content $file | Should -BeLikeExactly "*Failed to execute AXL entity getPhone."
+        Get-Content $file | Should -BeLikeExactly "*Failed to execute AXL entity getPhone.*"
         Remove-Item $file
     }
     It "Throws an exception when EnableException is set." {

@@ -22,31 +22,13 @@
         $Server = Get-PSFConfigValue -FullName pscucm.server
         $Credential = Get-PSFConfigValue -FullName pscucm.credential
     }
-    $params = ''
-    foreach ($paramKey in $Parameters.Keys) {
-        $inner = ''
-        if ($Parameters[$paramKey].GetType() -eq [System.Collections.Hashtable]) {
-            $innerHash = $Parameters[$paramKey]
-            foreach ($innerKey in $innerHash.Keys) {
-                $inner += '<{0}>{1}</{0}>' -f $innerKey, $innerHash[$innerKey]
-            }
+    $object = @{
+        'soapenv:Header' = ''
+        'soapenv:Body' = @{
+            "ns:$entity" = $Parameters
         }
-        else {
-            $inner = $Parameters[$paramKey]
-        }
-        $params += '<{0}>{1}</{0}>' -f $paramKey, $inner
     }
-    $body = @'
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.cisco.com/AXL/API/{0}">
-        <soapenv:Header/>
-        <soapenv:Body>
-            <ns:{1}>
-                {2}
-            </ns:{1}>
-        </soapenv:Body>
-    </soapenv:Envelope>
-'@ -f $AXLVersion, $Entity, $params
-    
+    $body = ConvertTo-XMLString -InputObject $object -ObjectName "soapenv:Envelope" -RootAttributes @{"xmlns:soapenv"="http://schemas.xmlsoap.org/soap/envelope/"; "xmlns:ns"="http://www.cisco.com/AXL/API/$AXLVersion"}
     if (-not $OutputXml) {
         if ($PSCmdlet.ShouldProcess($Server, "Execute AXL query $Entity")) {
         
@@ -78,8 +60,15 @@
                 $ErrorMessage = $_.ErrorDetails.message
                 $PSFMessage = "Failed to execute AXL entity $Entity."
                 if (($null -ne $ErrorMessage) -and ($_.Exception.Response.StatusCode -eq 'InternalServerError')) {
-                    $axlcode = ($ErrorMessage | select-xml -XPath '//axlcode' | Select-Object -ExpandProperty Node).'#text'
-                    $axlMessage = ($ErrorMessage | select-xml -XPath '//axlmessage' | Select-Object -ExpandProperty Node).'#text'
+                    if ($PSVersionTable.PSVersion.Major -ge 6) {
+                        $null = $ErrorMessage -match "(\d+)(.*)$Entity"
+                        $axlcode = $Matches[1]
+                        $axlMessage = $Matches[2]
+                    }
+                    else {
+                        $axlcode = ($ErrorMessage | select-xml -XPath '//axlcode' | Select-Object -ExpandProperty Node).'#text'
+                        $axlMessage = ($ErrorMessage | select-xml -XPath '//axlmessage' | Select-Object -ExpandProperty Node).'#text'
+                    }
                     $PSFMessage += " AXL Error: $axlMessage ($axlcode)"
                 }
                 Stop-PSFFunction -Message $PSFMessage -ErrorRecord $_ -EnableException $EnableException

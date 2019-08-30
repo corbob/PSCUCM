@@ -5,13 +5,10 @@
         [string]
         $DN,
         [switch]
-        $EnableException,
-        [switch]
-        $OutputXml
+        $EnableException
     )
     $phoneNameByDNSplat = @{
         DN              = $DN
-        OutputXml       = $OutputXml
         EnableException = $EnableException
     }
     $phoneName = Get-PSCUCMPhoneName @phoneNameByDNSplat |

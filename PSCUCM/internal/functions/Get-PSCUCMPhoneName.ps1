@@ -5,9 +5,7 @@
         [string]
         $DN,
         [switch]
-        $EnableException,
-        [switch]
-        $OutputXml
+        $EnableException
     )
     $CucmAxlSplat = @{
         SqlQuery        = @'
@@ -22,7 +20,6 @@
             numplan.dnorpattern = "{0}"
 '@ -f $DN
         EnableException = $EnableException
-        OutputXml       = $OutputXml
     }
     Invoke-PSCUCMSqlQuery @CucmAxlSplat
 }
