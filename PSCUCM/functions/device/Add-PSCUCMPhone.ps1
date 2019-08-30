@@ -3,45 +3,44 @@
     param (
         [Parameter(Mandatory = $true)]
         [string]
-        $MacAddress,
+        $Name,
         [Parameter(Mandatory = $true)]
+        [Alias('Model')]
         [string]
         $Product,
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory=$true)]
         [string]
-        $protocolSide,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $devicePoolName,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $commonPhoneConfigName,
-        [Parameter(Mandatory = $true)]
-        [string]
-        $phoneTemplateName,
+        $DevicePoolName,
         [Parameter(Mandatory = $true)]
         [string]
         $Protocol,
+        [Parameter()]
+        [string]
+        $Description,
+        [Parameter()]
         [switch]
         $EnableException,
+        [Parameter()]
         [switch]
         $OutputXml
     )
-    
+
+    <#
+         <phone>
+            <name>SEP000000000000</name>
+            <description>Optional</description>
+            <product>?</product>
+            <class>?</class>
+            <protocol>?</protocol>
+            <protocolSide>User</protocolSide>
+            <devicePoolName uuid="?">?</devicePoolName>
+         </phone>
+    #>
+        
     $class = 'Phone'
-    $locationName = 'Hub_None'
-    $useTrustedRelayPoint = 'Default'
-    $primaryPhoneName = ''
-    $deviceMobilityMode = 'Default'
-    $certificateOperation = 'No Pending Operation'
-    $packetCaptureMode = 'None'
-    $builtInBridgeStatus = 'Default'
     
     $CucmAxlSplat = @{
         entity          = 'addPhone'
-        # parameters      = @{
-        #     phone = $phonexml
-        # }
         parameters      = @{
             phone = @{
                 name                  = $MacAddress
@@ -53,12 +52,13 @@
                 commonPhoneConfigName = $commonPhoneConfigName
                 locationName          = $locationName
                 useTrustedRelayPoint  = $useTrustedRelayPoint
-                phoneTemplateName     = $phoneTemplateName
+                phoneTemplateName     = $Template
                 primaryPhoneName      = $primaryPhoneName
                 deviceMobilityMode    = $deviceMobilityMode
                 certificateOperation  = $certificateOperation
                 packetCaptureMode     = $packetCaptureMode
                 builtInBridgeStatus   = $builtInBridgeStatus
+                description           = $Description
             }
         }
         OutputXml       = $OutputXml
