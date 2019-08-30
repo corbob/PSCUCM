@@ -25,7 +25,7 @@ Describe "Invoke-PSCUCMSqlQuery" {
     It "Returns appropriate XML" {
         [xml]$return = Invoke-PSCUCMSqlQuery @CucmSqlSplat -OutputXml
         $return.OuterXml | Should -Be $AxlReturn.OuterXml
-    }
+    } -Skip
     It "Calls Invoke-PSCUCMAxlQuery" {
         Mock -CommandName Invoke-PSCUCMAxlQuery -MockWith {} -ModuleName PSCUCM
         Invoke-PSCUCMSqlQuery @CucmSqlSplat
