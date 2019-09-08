@@ -18,6 +18,7 @@
         $EnableException = $EnableException -or $(Get-PSFConfigValue -FullName pscucm.enableexception)
         if (-not (Get-PSFConfigValue -FullName pscucm.connected)) {
             Stop-PSFFunction -Message "Unable to process AXL request. Not connected." -EnableException $EnableException
+            return
         }
         $Server = Get-PSFConfigValue -FullName pscucm.server
         $Credential = Get-PSFConfigValue -FullName pscucm.credential
@@ -71,7 +72,7 @@
                     }
                     $PSFMessage += " AXL Error: $axlMessage ($axlcode)"
                 }
-                Stop-PSFFunction -Message $PSFMessage -ErrorRecord $_ -EnableException $EnableException
+                Stop-PSFFunction -Message $PSFMessage -ErrorRecord $_ -EnableException $EnableException -Target $body
                 return
             }
         }
