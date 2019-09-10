@@ -3,7 +3,7 @@
     ModuleToProcess   = 'PSCUCM.psm1'
 	
     # Version number of this module.
-    ModuleVersion     = '0.2.0'
+    ModuleVersion     = '0.2.1'
 	
     # ID used to uniquely identify this module
     GUID              = '6dce3384-d179-4bcd-92c0-445b281e4510'
@@ -26,7 +26,7 @@
     # Modules that must be imported into the global environment prior to importing
     # this module
     RequiredModules   = @(
-        @{ ModuleName = 'PSFramework'; ModuleVersion = '0.10.31.179' }
+        @{ ModuleName = 'PSFramework'; ModuleVersion = '1.0.35' }
     )
 	
     # Assemblies that must be loaded prior to importing this module
@@ -42,6 +42,7 @@
     FunctionsToExport = @(
         'Get-PSCUCMPhone'
         'Get-PSCUCMPhoneServices'
+        'Find-PSCUCMLine'
         'Invoke-PSCUCMAxlQuery'
         'Invoke-PSCUCMSqlQuery'
         'Add-PSCUCMPhone'

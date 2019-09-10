@@ -1,15 +1,6 @@
 ﻿# List of functions that should be ignored
 $global:FunctionHelpTestExceptions = @(
-  'Get-PSCUCMPhone',
-  'Get-PSCUCMPhoneServices', 
-  'Invoke-PSCUCMAxlQuery',
-  'Invoke-PSCUCMSqlQuery',
-  'Add-PSCUCMPhone',
-  'Get-PSCUCMTranslationPattern',
-  'Set-PSCUCMTranslationPattern',
-  'Invoke-PSCUCMLdapSync',
-  'Connect-PSCucm',
-  'Get-PSCUCMPhoneName'
+
 )
 
 <#
