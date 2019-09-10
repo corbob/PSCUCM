@@ -1,4 +1,24 @@
 ﻿function Get-PSCUCMPhone {
+    <#
+    .SYNOPSIS
+    Get a single phone in CUCM
+    
+    .DESCRIPTION
+    Get a single phone in CUCM based upon the Directory Number
+    
+    .PARAMETER DN
+    Directory Number to look up.
+    
+    .PARAMETER EnableException
+    Replaces user friendly yellow warnings with bloody red exceptions of doom!
+    Use this if you want the function to throw terminating errors you want to catch.
+    
+    .EXAMPLE
+    Get-PSCUCMPhone -DN 1001
+
+    Returns the phone with DN 1001.
+    #>
+    
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
