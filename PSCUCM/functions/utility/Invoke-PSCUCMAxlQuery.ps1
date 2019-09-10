@@ -1,4 +1,38 @@
 ﻿function Invoke-PSCUCMAxlQuery {
+    <#
+    .SYNOPSIS
+    Invoke an AXL Query
+    
+    .DESCRIPTION
+    Invoke an AXL Query against the connected server.
+    
+    .PARAMETER Entity
+    AXL Entity to invoke.
+    
+    .PARAMETER Parameters
+    Parameters for the AXL Entity.
+    
+    .PARAMETER EnableException
+    Replaces user friendly yellow warnings with bloody red exceptions of doom!
+    Use this if you want the function to throw terminating errors you want to catch.
+    
+    .PARAMETER OutputXml
+    Output XML for the query instead of invoking it.
+
+    .PARAMETER WhatIf
+    What If?
+    
+    .PARAMETER Confirm
+    Confirm...
+    
+    .EXAMPLE
+    Invoke-PSCUCMAxlQuery -Entity getUser -Parameters @{ name = 'administrator' } -OutputXML
+
+    Outputs the XML that would be sent to CUCM server.
+    
+    .NOTES
+    OutputXML does *not* need a connected CUCM server to run.
+    #>
     
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = "Low")]
     param (
@@ -14,14 +48,18 @@
         $OutputXml
     )
     $AXLVersion = Get-PSFConfigValue -FullName pscucm.axlversion
+    Write-PSFMessage -Level Debug -Message "AXL Version: $AXLVersion"
     if (-not $OutputXml) {
+        Write-PSFMessage -Level Verbose -Message "Attempting to query $Entity" -Target $Parameters
         $EnableException = $EnableException -or $(Get-PSFConfigValue -FullName pscucm.enableexception)
         if (-not (Get-PSFConfigValue -FullName pscucm.connected)) {
             Stop-PSFFunction -Message "Unable to process AXL request. Not connected." -EnableException $EnableException
             return
         }
         $Server = Get-PSFConfigValue -FullName pscucm.server
+        Write-PSFMessage -Level Debug -Message "Querying $Server"
         $Credential = Get-PSFConfigValue -FullName pscucm.credential
+        Write-PSFMessage -Level Debug -Message "Using username: $($Credential.Username)"
     }
     $object = @{
         'soapenv:Header' = ''
@@ -30,9 +68,9 @@
         }
     }
     $body = ConvertTo-XMLString -InputObject $object -ObjectName "soapenv:Envelope" -RootAttributes @{"xmlns:soapenv"="http://schemas.xmlsoap.org/soap/envelope/"; "xmlns:ns"="http://www.cisco.com/AXL/API/$AXLVersion"}
+    Write-PSFMessage -Level Debug -Message "Generated XML for Entity: $Entity" -Target $body
     if (-not $OutputXml) {
         if ($PSCmdlet.ShouldProcess($Server, "Execute AXL query $Entity")) {
-        
             $CUCMURL = "https://$Server/axl/"
             $headers = @{
                 'Content-Type' = 'text/xml; charset=utf-8'
