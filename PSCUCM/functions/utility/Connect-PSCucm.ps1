@@ -59,6 +59,7 @@
         Register-PSFConfig -FullName pscucm.axlversion
         Register-PSFConfig -FullName pscucm.server
         Register-PSFConfig -FullName pscucm.credential
-        Register-PSFConfig -FullName pscucm.$SkipCertificateCheck
+        Register-PSFConfig -FullName pscucm.skipcertificatecheck
+        Register-PSFConfig -FullName pscucm.connected
     }
 }
