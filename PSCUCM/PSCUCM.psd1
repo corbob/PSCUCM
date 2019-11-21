@@ -43,6 +43,8 @@
         'Get-PSCUCMPhone'
         'Get-PSCUCMPhoneServices'
         'Find-PSCUCMLine'
+        'Find-PSCUCMHuntPilot'
+        'Find-PSCUCMHuntList'
         'Invoke-PSCUCMAxlQuery'
         'Invoke-PSCUCMSqlQuery'
         'Add-PSCUCMPhone'
