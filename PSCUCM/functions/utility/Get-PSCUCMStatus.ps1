@@ -1,4 +1,23 @@
 ﻿function Get-PSCUCMStatus {
+    <#
+    .SYNOPSIS
+    Get the status of the current CUCM Connection
+    
+    .DESCRIPTION
+    Get the status of the current CUCM Connection. Does *not* return the credential.
+    
+    .EXAMPLE
+    Get-PSCUCMStatus
+
+    
+
+    Name                           Value
+    ----                           -----
+    Server
+    SkipCertificateCheck
+    AXLVersion
+    Connected                      False
+    #>
     [CmdletBinding()]
     param ()
     @{
