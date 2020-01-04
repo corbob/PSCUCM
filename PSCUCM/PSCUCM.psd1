@@ -1,6 +1,6 @@
 ﻿@{
     # Script module or binary module file associated with this manifest
-    ModuleToProcess   = 'PSCUCM.psm1'
+    RootModule        = 'PSCUCM.psm1'
 	
     # Version number of this module.
     ModuleVersion     = '0.2.3'
@@ -21,7 +21,7 @@
     Description       = 'Module for interfacing with the Cisco Unified Call Manager (CUCM) Administrative XML Service (AXL).'
 	
     # Minimum version of the Windows PowerShell engine required by this module
-    PowerShellVersion = '5.0'
+    PowerShellVersion = '5.1'
 	
     # Modules that must be imported into the global environment prior to importing
     # this module
