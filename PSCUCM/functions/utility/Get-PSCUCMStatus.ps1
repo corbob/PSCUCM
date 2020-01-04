@@ -20,7 +20,7 @@
     #>
     [CmdletBinding()]
     param ()
-    @{
+    [PSCustomObject]@{
         Connected = Get-PSFConfigValue PSCUCM.Connected
         AXLVersion = Get-PSFConfigValue PSCUCM.AXLVersion
         Server = Get-PSFConfigValue PSCUCM.Server
