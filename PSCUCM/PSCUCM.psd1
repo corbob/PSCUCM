@@ -40,6 +40,7 @@
 	
     # Functions to export from this module
     FunctionsToExport = @(
+        'Get-PSCUCMStatus'
         'Get-PSCUCMPhone'
         'Get-PSCUCMPhoneServices'
         'Find-PSCUCMLine'
