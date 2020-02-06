@@ -50,6 +50,7 @@
         'Find-PSCUCMHuntList'
         'Find-PSCUCMHuntPilot'
         'Find-PSCUCMLineGroup'
+        'Find-PSCUCMTranslationPattern'
         'Get-PSCUCMHuntList'
         'Get-PSCUCMHuntPilot'
         'Get-PSCUCMLineGroup'
