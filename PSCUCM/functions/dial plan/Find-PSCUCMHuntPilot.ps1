@@ -116,5 +116,5 @@
     if (![string]::IsNullOrEmpty($RoutePartitionName)) {
         $invokeCucmAxlSplat.parameters.searchCriteria.routePartitionName = $RoutePartitionNamepattern
     }
-    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | select-Object -ExpandProperty huntPilot
+    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Selec-Xml -XPath '//huntPilot' | Select-Object -ExpandProperty Node
 }
