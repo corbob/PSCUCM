@@ -54,5 +54,5 @@
     if (![string]::IsNullOrEmpty($Description)) {
         $invokeCucmAxlSplat.parameters.searchCriteria.description = $Description
     }
-    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | select-Object -ExpandProperty huntList
+    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Select-Xml -XPath '//huntList' | Select-Object -ExpandProperty node
 }

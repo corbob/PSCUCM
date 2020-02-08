@@ -56,5 +56,5 @@
     if (![string]::IsNullOrEmpty($name)) {
         $invokeCucmAxlSplat.parameters.searchCriteria.name = $name
     }
-    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | select-Object -ExpandProperty lineGroup
+    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Selec-Xml -XPath '//lineGroup' | Select-Object -ExpandProperty Node
 }

@@ -41,5 +41,5 @@
         }
         EnableException = $EnableException
     }
-    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat
+    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Selec-Xml -XPath '//transPattern' | Select-Object -ExpandProperty Node
 }
