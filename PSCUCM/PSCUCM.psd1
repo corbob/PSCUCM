@@ -59,6 +59,7 @@
         'Invoke-PSCUCMLdapSync'
         'Connect-PSCucm'
         'Disconnect-PSCucm'
+        'Remove-PSCUCMPhone'
     )
 	
     # Cmdlets to export from this module
