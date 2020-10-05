@@ -42,6 +42,7 @@
         [switch]
         $EnableException
     )
+    $cucmDeets = Get-PSCUCMStatus
     $invokeCucmAxlSplat = @{
         entity          = 'updateTransPattern'
         parameters      = @{
@@ -55,7 +56,7 @@
     if ($calledPartyTransformationMask) {
         $invokeCucmAxlSplat.parameters.calledPartyTransformationMask = $calledPartyTransformationMask
     }
-    if ($PSCmdlet.ShouldProcess($server, "Set Translation Pattern $TranslationPattern")) {
+    if ($PSCmdlet.ShouldProcess($cucmDeets.Server, "Set Translation Pattern $TranslationPattern")) {
         Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat
     }
 }
