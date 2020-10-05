@@ -4,4 +4,5 @@
 # Needs to ensure things are Done Right and only legal commits to master get built
 
 # Run internal pester tests
+Import-Module Pester -MaximumVersion 4.999
 & "$PSScriptRoot\..\PSCUCM\tests\pester.ps1"
