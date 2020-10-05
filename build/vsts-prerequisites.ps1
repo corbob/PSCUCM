@@ -15,6 +15,6 @@
 
 foreach ($module in $modules) {
     Write-Host "Installing $($module.name) with a max version: $($module.maxVersion)" -ForegroundColor Cyan
-    Install-Module $module.name -Force -SkipPublisherCheck -MaximumVersion $module.maxVersion -whatif
-    Import-Module $module.name -Force -PassThru
+    Install-Module $module.name -Force -SkipPublisherCheck -MaximumVersion $module.maxVersion
+    Import-Module $module.name -Force -PassThru -MaximumVersion $module.maxVersion
 }
