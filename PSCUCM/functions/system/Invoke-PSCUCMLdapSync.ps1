@@ -47,6 +47,7 @@
         [switch]
         $EnableException
     )
+    $cucmDeets = Get-PSCUCMStatus
     $invokeCucmAxlSplat = @{
         entity     = 'doLdapSync'
         parameters = @{
@@ -58,7 +59,7 @@
     if ($cancelActive.IsPresent) {
         $invokeCucmAxlSplat.parameters.sync = $false
     }
-    if ($PSCmdlet.ShouldProcess($server, "Set Translation Pattern $TranslationPattern")) {
+    if ($PSCmdlet.ShouldProcess($cucmDeets.Server, "Set Translation Pattern $TranslationPattern")) {
         Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat
     }
 }
