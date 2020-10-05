@@ -79,7 +79,7 @@
         entity          = 'addPhone'
         parameters      = @{
             phone = @{
-                name                  = $MacAddress
+                name                  = $Name
                 product               = $Product
                 class                 = $class
                 protocol              = $Protocol
