@@ -86,7 +86,6 @@
                 protocolSide          = $protocolSide
                 devicePoolName        = $devicePoolName
                 commonPhoneConfigName = $commonPhoneConfigName
-                locationName          = $locationName
                 useTrustedRelayPoint  = $useTrustedRelayPoint
                 phoneTemplateName     = $Template
                 primaryPhoneName      = $primaryPhoneName
