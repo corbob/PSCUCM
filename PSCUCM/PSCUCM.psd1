@@ -3,7 +3,7 @@
     RootModule        = 'PSCUCM.psm1'
 	
     # Version number of this module.
-    ModuleVersion     = '0.2.7'
+    ModuleVersion     = '0.2.8'
 	
     # ID used to uniquely identify this module
     GUID              = '6dce3384-d179-4bcd-92c0-445b281e4510'
