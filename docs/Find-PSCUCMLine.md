@@ -24,7 +24,7 @@ Find lines within CUCM that match the criteria
 
 ### EXAMPLE 1
 ```
-Find-PSCUCMLine -Line %
+Find-PSCUCMLine -Pattern %
 ```
 
 Finds all lines within CUCM
