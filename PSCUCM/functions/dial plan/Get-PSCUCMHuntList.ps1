@@ -45,5 +45,5 @@
     if($PSCmdlet.ParameterSetName -eq 'uuid') {
         $invokeCucmAxlSplat.parameters.uuid = $uuid
     }
-    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Selec-Xml -XPath '//huntList' | Select-Object -ExpandProperty Node
+    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Select-Xml -XPath '//huntList' | Select-Object -ExpandProperty Node
 }
