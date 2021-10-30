@@ -26,6 +26,9 @@
         [switch]
         $EnableException
     )
+    if ([string]::IsNullOrEmpty($name)) {
+        $name = '%'
+    }
     $invokeCucmAxlSplat = @{
         entity          = 'listLineGroup'
         parameters      = @{
@@ -38,23 +41,21 @@
                 huntAlgorithmNoAnswer     = $null
                 huntAlgorithmBusy         = $null
                 huntAlgorithmNotAvailable = $null
-                embers                    = @{
-                    ember = @{
+                members                   = @{
+                    member = @{
                         lineSelectionOrder = $null
-                        irectoryNumber     = @{
+                        directoryNumber    = @{
                             pattern            = $null
                             routePartitionName = $null
                         }
                     }
                 }
-                name                      = $null
+                name                      = $name
                 autoLogOffHunt            = $null
             }
         }
         EnableException = $EnableException
     }
-    if (![string]::IsNullOrEmpty($name)) {
-        $invokeCucmAxlSplat.parameters.searchCriteria.name = $name
-    }
-    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Selec-Xml -XPath '//lineGroup' | Select-Object -ExpandProperty Node
+    $invokeCucmAxlSplat.parameters.searchCriteria.name = $name
+    Invoke-PSCUCMAxlQuery @invokeCucmAxlSplat | Select-Xml -XPath '//lineGroup' | Select-Object -ExpandProperty Node
 }

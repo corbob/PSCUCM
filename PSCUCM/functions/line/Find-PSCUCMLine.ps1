@@ -29,7 +29,7 @@
     Use this if you want the function to throw terminating errors you want to catch.
     
     .EXAMPLE
-    Find-PSCUCMLine -Line %
+    Find-PSCUCMLine -Pattern %
 
     Finds all lines within CUCM
     
